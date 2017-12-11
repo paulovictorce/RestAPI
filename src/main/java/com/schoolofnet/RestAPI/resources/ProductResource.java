@@ -1,6 +1,8 @@
 package com.schoolofnet.RestAPI.resources;
 
 import com.schoolofnet.RestAPI.models.Product;
+import com.schoolofnet.RestAPI.services.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -9,10 +11,18 @@ import java.util.List;
 public class ProductResource {
 
 
+    @Autowired
+    private ProductService productService;
+
+    public ProductResource (ProductService productService) {
+        this.productService = productService;
+    }
+
+
     @GetMapping
     @ResponseBody
     public List<Product> findAll() {
-        return null;
+        return this.productService.findAll();
     }
 
     @GetMapping(value = "/{id}")
@@ -24,7 +34,7 @@ public class ProductResource {
     @PostMapping
     @ResponseBody
     public Product create(@RequestBody Product product) {
-        return null;
+        return this.productService.create(product);
     }
 
     @PutMapping(value = "/{id}")
