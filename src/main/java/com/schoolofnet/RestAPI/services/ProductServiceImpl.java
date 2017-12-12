@@ -23,8 +23,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findOne() {
-        return null;
+    public Product findOne(Long id) {
+        return productRepository.findOne(id);
     }
 
     @Override
@@ -34,12 +34,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product update() {
+    public Product update(Long id, Product product) {
+        Product productExists = this.productRepository.findOne(id);
+        if (productExists != null) {
+            product.setId(productExists.getId());
+            productRepository.save(product);
+            return product;
+
+        }
         return null;
     }
 
     @Override
-    public void delete() {
+    public void delete(Long id) {
+        Product product = this.productRepository.findOne(id);
+        if (product != null) {
+            productRepository.delete(id);
+        }
 
     }
 }
