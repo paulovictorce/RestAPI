@@ -3,10 +3,7 @@ package com.schoolofnet.RestAPI.models;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -22,7 +19,7 @@ public class Product {
 
     @NotEmpty(message = "Can not be empty")
     @NotBlank(message = "Can not be blank")
-    @Size(max = 255)
+    @Size(min = 4, max = 255)
     private String name;
 
     private Integer qtd;
@@ -36,6 +33,13 @@ public class Product {
         this.name = name;
         this.qtd = qtd;
 
+    }
+
+    @PrePersist
+    public void onPrePersist() {
+        if (this.dateCreated == null) {
+            this.dateCreated = new Date();
+        }
     }
 
     public Long getId() {
