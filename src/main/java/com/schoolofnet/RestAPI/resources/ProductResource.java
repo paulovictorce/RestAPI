@@ -2,6 +2,8 @@ package com.schoolofnet.RestAPI.resources;
 
 import com.schoolofnet.RestAPI.models.Product;
 import com.schoolofnet.RestAPI.services.ProductService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
+@Api(value = "REST  - Model Product")
 public class ProductResource {
 
 
@@ -26,6 +29,7 @@ public class ProductResource {
     }
 
 
+    @ApiOperation(value = "Find all products in database ")
     @GetMapping
     @ResponseBody
     public ResponseEntity<?> findAll() {
@@ -34,6 +38,7 @@ public class ProductResource {
         return new ResponseEntity<List>(list, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Find by id in database")
     @GetMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<?> find(@PathVariable(value = "id") Long id) {
@@ -42,6 +47,7 @@ public class ProductResource {
         return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Create a new product")
     @PostMapping
     @ResponseBody
     @ResponseStatus(code = HttpStatus.CREATED)
@@ -58,6 +64,7 @@ public class ProductResource {
         );
     }
 
+    @ApiOperation(value = "Update product by id")
     @PutMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<?> update(@PathVariable(value = "id") Long id, @Valid @RequestBody Product product, Errors errors) {
@@ -73,6 +80,7 @@ public class ProductResource {
         );
     }
 
+    @ApiOperation(value = "Delete product by id")
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable(value = "id") Long id) {
